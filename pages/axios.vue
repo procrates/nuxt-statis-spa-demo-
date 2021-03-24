@@ -1,6 +1,6 @@
 <template>
   <div>
-    <article v-for="character in chars.results" :key="character.id">
+    <article v-for="character in characters" :key="character.id">
       <h1>{{ character.name }}</h1>
     </article>
   </div>
@@ -15,10 +15,11 @@ export default {
   },
   async asyncData({ $axios }) {
     try {
-      const chars = await $axios.$get(
-        "https://rickandmortyapi.com/api/character?page=1"
+      const response = await $axios.$get(
+        "http://localhost:8888/.netlify/functions/ram-axios"
       );
-      return { chars };
+      console.log(response);
+      return { characters: response.results };
     } catch (error) {
       console.error(error);
     }
